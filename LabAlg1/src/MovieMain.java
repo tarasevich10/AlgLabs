@@ -1,52 +1,72 @@
-public class MovieMain implements Comparable<MovieMain> {
-    private String name;
-    private int duration;
-    private int numOfResponse;
+import java.util.ArrayList;
 
-    public MovieMain(String name, int duration, int numOfResponse){
-        setName(name);
-        setDuration(duration);
-        setNumOfResponse(numOfResponse);
+public class MovieMain {
+
+    //we use bubblesort for sorting by duration
+    public static void bubbleSort(ArrayList<Movie> list) {
+        Movie temp;
+        int comparison = 0;
+        int swap = 0;
+        if (list.size() > 1) {
+            for (int x = 0; x < list.size(); x++) {
+                for (int i = 0; i < list.size() - x - 1; i++) {
+                    comparison++;
+                    if (list.get(i).compareToNumOfDuration(list.get(i + 1)) > 0) {
+                        swap++;
+                        temp = list.get(i);
+                        list.set(i, list.get(i + 1));
+                        list.set(i + 1, temp);
+                    }
+                }
+            }
+        }
+        System.out.println("Bubblesort, number of swaps: " + swap + " , and number of comparisons: " + comparison);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public static ArrayList<Movie> mergeSort(ArrayList<Movie> numOfResponse) {
+        if (numOfResponse.size() <= 1) {
+            return numOfResponse;
+        }
+        ArrayList<Movie> newList;
+
+        ArrayList<Movie> left = new ArrayList<>();
+        ArrayList<Movie> right = new ArrayList<>();
+        int middle = numOfResponse.size() / 2;
+        //Splits the array into unsortedList size lists of size one
+        for (int i = 0; i < numOfResponse.size(); i++) {
+            if (i < middle) {
+                left.add(numOfResponse.get(i));
+            } else {
+                right.add(numOfResponse.get(i));
+            }
+        }
+        left = mergeSort(left);
+        right = mergeSort(right);
+
+        newList = merge(left, right);
+        return newList;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+    static ArrayList<Movie> merge(ArrayList<Movie> left, ArrayList<Movie> right) {
+        ArrayList<Movie> mergedList = new ArrayList<>();
 
-    public void setNumOfResponse(int numOfResponse) {
-        this.numOfResponse = numOfResponse;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public int getNumOfResponse() {
-        return numOfResponse;
-    }
-
-
-    @Override
-    public int compareTo(MovieMain z)
-    {
-        int res=0;
-        if (duration < z.duration) {res=-1;  }
-        if (duration > z.duration){res=1;}
-        return res;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "Name of movie: "+ name + " , duration is: "+ duration + ", number of response: "+ numOfResponse;
+        while (left.size() > 0 || right.size() > 0) {
+            if (left.size() > 0 && right.size() > 0) {
+                if (left.get(0).compareToNumOfResponse(right.get(0)) > 0) {
+                    mergedList.add(left.get(0));
+                    left.remove(0);
+                } else {
+                    mergedList.add(right.get(0));
+                    right.remove(0);
+                }
+            } else if (left.size() > 0) {
+                mergedList.add(left.get(0));
+                left.remove(0);
+            } else if (right.size() > 0) {
+                mergedList.add(right.get(0));
+                right.remove(0);
+            }
+        }
+        return mergedList;
     }
 }

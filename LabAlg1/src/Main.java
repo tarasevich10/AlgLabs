@@ -1,9 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -16,17 +14,17 @@ public class Main {
     public static void main(String[] arg) {
 
         int startTime = (int) System.currentTimeMillis();
-        int i=0;
-        ArrayList<MovieMain> movieMain = new ArrayList<>();
+        int i = 0;
+        ArrayList<Movie> movie = new ArrayList<>();
         Scanner scanner;
-        try{
-            String filePath = "F:\\IdeaProgramming\\LabAlg1\\src\\text.txt";
+        try {
+            String filePath = "F:\\Програмування\\AlgLabs\\LabAlg1\\src\\text.txt";
             scanner = new Scanner(new FileReader(filePath));
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 String[] fields = line.split(",");
 
-                movieMain.add(new MovieMain(fields[0], Integer.parseInt(fields[1]), Integer.parseInt(fields[2])));
+                movie.add(new Movie(fields[0], Integer.parseInt(fields[1]), Integer.parseInt(fields[2])));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -36,25 +34,24 @@ public class Main {
         System.out.println("Початковий список всіх фільмів:");
 
 
-
         System.out.println("Алгоритм 'Bubble' за кількістю відгуків по спаданню.");
 
         System.out.println("До сортування:");
-        printArray(movieMain);
+        printArray(movie);
 
         System.out.println("Після Сортування:");
-        Movie.bubbleSort(movieMain);
-        printArray(movieMain);
+        MovieMain.bubbleSort(movie);
+        printArray(movie);
 
         System.out.println("Алгоритм 'Merge'  для сортування за тривалістю по зростанню");
 
 
-        Movie.mergeSort(movieMain);
+        movie = MovieMain.mergeSort(movie);
         System.out.println("Після мердж сорт");
-        printArray(movieMain);
+        printArray(movie);
 
 
         int endTime = (int) System.currentTimeMillis();
-        System.out.println("Час виконання роботи: " + (endTime - startTime) + "мілісекундию");
+        System.out.println("Час виконання роботи: " + (endTime - startTime) + " мілісекунди.");
     }
 }
