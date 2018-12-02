@@ -15,7 +15,7 @@ def find_divide_count(somestr):
                     result = right_part_divide_counter
                 elif result > right_part_divide_counter + 1:
                     result = right_part_divide_counter
-            result += 1
+                result += 1
         begin_of_next_str += 1
     return result
 
